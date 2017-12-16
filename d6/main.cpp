@@ -41,8 +41,7 @@ int main(int argc, char *argv[argc])
   //banks = {0, 2, 7, 0};
   printBanks(banks,"start");
 
-  // faster (by how much) to use unordered_map if i defined a hash function
-  map<bank_t,size_t> history;
+  vector<bank_t> history;
   int count = 0;
   while (1)
   {
@@ -50,11 +49,15 @@ int main(int argc, char *argv[argc])
     banks = rebalance(banks);
     printBanks(banks,to_string(count));
 
-    if (!history.count(banks))
-      history[banks] = 1;
+    auto search = find(history.begin(), history.end(), banks);
+    if (search == history.end())
+      history.push_back(banks);
     else
-      break;
+    {
+      int pos = distance(history.begin(),search);
+      cout << "infinite loop size: " << count - pos - 1 << endl;
+      cout << "iterations to infinite loop " << count << endl;
+      return 0;
+    }
   }
-  cout << "iterations to infinite loop " << count << endl;
-  return 0;
 }
