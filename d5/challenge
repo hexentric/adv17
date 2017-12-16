@@ -27,3 +27,7 @@ In this example, the exit is reached in 5 steps.
 
 How many steps does it take to reach the exit?
 
+
+Part 2
+
+(decrement instead of increment if offset is greater than 3)
